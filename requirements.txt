@@ -1,0 +1,4 @@
+dataclasses==0.6
+dataclasses-json==0.5.2
+Django==3.2
+marshmallow==3.11.1
