@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>PCCS</title>
+
+    <script type = "text/javascript">
+        function AutoRefresh( t ) {
+               setTimeout("location.reload(true);", t);
+            }
+    </script>
+
+</head>
+<body onload="AutoRefresh(10000);">
+
+    {% block content %}
+        {% if pc_config %}
+            <p>
+            Your token: {{ pc_config.token }} <br>
+            OS name: {{ pc_config.os_name }} <br>
+            OS version: {{ pc_config.os_version }} <br>
+            Processor name: {{ pc_config.processor_name }} <br>
+            Processor architecture: {{ pc_config.processor_architecture }} <br>
+            Processor temperature: {{ pc_config.processor_temperature }} <br>
+            Processor loading: {{ pc_config.processor_loading }} <br>
+            Disk memory: {{ pc_config.disk_memory }} <br>
+            Disk loading: {{ pc_config.disk_loading }} <br>
+            RAM: {{ pc_config.ram }} <br>
+            Host: {{ pc_config.socket_info_host }} <br>
+            IP address: {{ pc_config.socket_info_ip_address }} <br>
+            MAC address: {{ pc_config.socket_info_mac_address }} <br>
+            </p>
+
+        {% else %}
+            Конфигурация не найдена
+        {% endif %}
+    {% endblock %}
+</body>
+</html>
