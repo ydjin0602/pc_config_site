@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pc_configuration',
-    'site_visualizer'
+    'site_visualizer',
+    'db_requests_manager',
 ]
 
 MIDDLEWARE = [
