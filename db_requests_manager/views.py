@@ -64,9 +64,16 @@ class GetConfigOptions:
     token: t.Text
 
 
+@dataclass_json
+@dataclass(frozen=True)
+class DeleteConfigOption:
+    token: t.Text
+
+
 class DBRequestsManagerView(View):
     __GET_PC_CONFIG_SCHEMA = GetConfigOptions.schema()
     __CREATE_PC_CONFIG_SCHEMA = CreateConfigOptions.schema()
+    __DELETE_PC_CONFIG_SCHEMA = DeleteConfigOption.schema()
 
     @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
@@ -135,11 +142,29 @@ class DBRequestsManagerView(View):
     def put(self) -> HttpResponse:
         pass
 
-    def delete(self) -> HttpResponse:
-        pass
+    def delete(self, request: HttpRequest) -> HttpResponse:
+        try:
+            request_body = self.__parse_delete_config_request(request)
+        except (json.JSONDecodeError, KeyError, UnicodeDecodeError, ValidationError) as exception:
+            return self.__return_bad_request(exception)
+
+        try:
+            pc_config = PCConfiguration.objects.get(token=request_body.token)
+        except PCConfiguration.DoesNotExist as exception:
+            return self.__build_not_found_json_response(f'Configuration (token={request_body.token}) not found.',
+                                                        exception)
+        pc_config.delete()
+        return JsonResponse(
+            {
+                'result': f'Configuration (token={request_body.token}) successfully deleted.'
+            }
+        )
 
     def __parse_create_config_request(self, request: HttpRequest) -> CreateConfigOptions:
         return self.__CREATE_PC_CONFIG_SCHEMA.load(json.loads(request.body))
+
+    def __parse_delete_config_request(self, request: HttpRequest) -> DeleteConfigOption:
+        return self.__DELETE_PC_CONFIG_SCHEMA.load(json.loads(request.body))
 
     @staticmethod
     def __build_not_found_json_response(description: str, exception: t.Any) -> JsonResponse:
