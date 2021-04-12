@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'pc_configuration',
     'site_visualizer',
     'db_requests_manager',
+    'token_generator',
 ]
 
 MIDDLEWARE = [
