@@ -19,18 +19,18 @@
         {% if pc_config %}
             <p>
             Your token: {{ pc_config.token }} <br>
-            OS name: {{ pc_config.os_name }} <br>
-            OS version: {{ pc_config.os_version }} <br>
-            Processor name: {{ pc_config.processor_name }} <br>
-            Processor architecture: {{ pc_config.processor_architecture }} <br>
-            Processor temperature: {{ pc_config.processor_temperature }} <br>
-            Processor loading: {{ pc_config.processor_loading }} <br>
-            Disk memory: {{ pc_config.disk_memory }} <br>
-            Disk loading: {{ pc_config.disk_loading }} <br>
+            OS name: {{ pc_config.os.name }} <br>
+            OS version: {{ pc_config.os.version }} <br>
+            Processor name: {{ pc_config.processor.name }} <br>
+            Processor architecture: {{ pc_config.processor.architecture }} <br>
+            Processor temperature: {{ pc_config.processor.temperature }} <br>
+            Processor loading: {{ pc_config.processor.loading }} <br>
+            Disk memory: {{ pc_config.disk.memory }} <br>
+            Disk loading: {{ pc_config.disk.loading }} <br>
             RAM: {{ pc_config.ram }} <br>
-            Host: {{ pc_config.socket_info_host }} <br>
-            IP address: {{ pc_config.socket_info_ip_address }} <br>
-            MAC address: {{ pc_config.socket_info_mac_address }} <br>
+            Host: {{ pc_config.socket_info.host }} <br>
+            IP address: {{ pc_config.socket_info.ip_address }} <br>
+            MAC address: {{ pc_config.socket_info.mac_address }} <br>
             </p>
 
         {% else %}

@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+from os import getenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +20,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-b6$&l%ky-i#cp_!^zrx9bfh&5e$!bo^@4qz)4v&1u)c)z##*(f'
+SECRET_KEY = getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv('DJANGO_DEBUG', '').strip().lower() in {'1', 'yes', 'true'}
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    host
+    for host in getenv('DJANGO_ALLOWED_HOSTS', "*").strip().split(',')
+    if host
+]
 
 
 # Application definition
@@ -58,8 +62,7 @@ ROOT_URLCONF = 'pc_config_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,9 +83,13 @@ WSGI_APPLICATION = 'pc_config_site.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': getenv("PG_DATABASE"),
+        'USER': getenv("PG_USERNAME"),
+        'PASSWORD': getenv("PG_PASSWORD"),
+        'HOST': getenv("PG_HOST"),
+        'PORT': getenv("PG_PORT"),
+    },
 }
 
 

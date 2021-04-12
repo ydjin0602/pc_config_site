@@ -1,7 +1,7 @@
 from django.db import models
 from marshmallow import Schema, fields
 
-from db_requests_manager.request_options.post import CreateConfigOptions
+from db_requests_manager.request_options.post import PostConfigOptions
 from db_requests_manager.request_options.put import PutConfigOptions
 
 
@@ -38,7 +38,7 @@ class PCConfiguration(models.Model):
     ram = models.CharField('RAM', max_length=20, default=None)
 
     @classmethod
-    def create(cls, options: CreateConfigOptions) -> 'PCConfiguration':
+    def create(cls, options: PostConfigOptions) -> 'PCConfiguration':
         os_config = OSConfiguration(
             name=options.os.name,
             version=options.os.version

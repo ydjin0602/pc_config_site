@@ -11,7 +11,7 @@ from marshmallow import ValidationError, Schema
 
 from db_requests_manager.request_options.delete import DeleteConfigOption
 from db_requests_manager.request_options.get import GetConfigOptions
-from db_requests_manager.request_options.post import CreateConfigOptions
+from db_requests_manager.request_options.post import PostConfigOptions
 from db_requests_manager.request_options.put import PutConfigOptions
 from pc_configuration.models import PCConfiguration, PCConfigurationSchema
 
@@ -20,7 +20,7 @@ LOGGER = logging.getLogger(__name__)
 
 class DBRequestsManagerView(View):
     __GET_PC_CONFIG_SCHEMA = GetConfigOptions.schema()
-    __CREATE_PC_CONFIG_SCHEMA = CreateConfigOptions.schema()
+    __POST_PC_CONFIG_SCHEMA = PostConfigOptions.schema()
     __PUT_PC_CONFIG_SCHEMA = PutConfigOptions.schema()
     __DELETE_PC_CONFIG_SCHEMA = DeleteConfigOption.schema()
 
@@ -56,7 +56,7 @@ class DBRequestsManagerView(View):
 
     def post(self, request: HttpRequest) -> HttpResponse:
         try:
-            request_body: CreateConfigOptions = self.__parse_request(self.__CREATE_PC_CONFIG_SCHEMA, request)
+            request_body: PostConfigOptions = self.__parse_request(self.__POST_PC_CONFIG_SCHEMA, request)
         except (json.JSONDecodeError, KeyError, UnicodeDecodeError, ValidationError) as exception:
             return self.__build_bad_request_response(exception)
 
@@ -115,7 +115,7 @@ class DBRequestsManagerView(View):
 
     @staticmethod
     def __parse_request(schema: Schema, request: HttpRequest) -> t.Union[
-        CreateConfigOptions, DeleteConfigOption, PutConfigOptions
+        PostConfigOptions, DeleteConfigOption, PutConfigOptions
     ]:
         return schema.load(json.loads(request.body))
 

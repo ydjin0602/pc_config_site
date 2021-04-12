@@ -36,7 +36,7 @@ class DiskConfig:
 
 @dataclass_json
 @dataclass(frozen=True)
-class CreateConfigOptions:
+class PostConfigOptions:
     token: t.Text
     os: OSConfig
     processor: ProcessorConfig
