@@ -2,4 +2,4 @@
 
 echo "Apply database migrations"
 python manage.py migrate
-gunicorn -b 0.0.0.0:8000 pc_config_site.wsgi --workers=5 --threads=2
+uvicorn --host 0.0.0.0 --port 8000 pc_config_site.asgi:application
