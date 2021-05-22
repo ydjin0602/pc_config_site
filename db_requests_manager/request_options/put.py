@@ -15,7 +15,7 @@ class OSConfig:
 class ProcessorConfig:
     name: t.Optional[t.Text] = None
     architecture: t.Optional[t.Text] = None
-    total_cores: t.Optional[t.Text] = None
+    total_cores: t.Optional[int] = None
     max_frequency: t.Optional[t.Text] = None
     current_frequency: t.Optional[t.Text] = None
     temperature: t.Optional[t.Text] = None

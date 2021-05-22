@@ -10,7 +10,7 @@ class ProcessorConfigurationSchema(Schema):
 
     name = fields.Str()
     architecture = fields.Str()
-    total_cores = fields.Str()
+    total_cores = fields.Int()
     max_frequency = fields.Str()
     current_frequency = fields.Str()
     temperature = fields.Str()

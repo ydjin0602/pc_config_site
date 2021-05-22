@@ -15,7 +15,7 @@ class OSConfig:
 class ProcessorConfig:
     name: t.Text
     architecture: t.Text
-    total_cores: t.Text
+    total_cores: int
     max_frequency: t.Text
     current_frequency: t.Text
     temperature: t.Text

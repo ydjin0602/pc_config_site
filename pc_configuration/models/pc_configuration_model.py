@@ -46,9 +46,9 @@ class PCConfigurationModel(models.Model):
 
         disk_config = DiskConfigurationModel(
             file_system_type=options.disk.file_system_type,
-            total_memory=options.disk.memory,
+            total_memory=options.disk.total_memory,
             available=options.disk.available,
-            used=options.disk.loading,
+            used=options.disk.used,
             used_in_percents=options.disk.used_in_percents,
         )
 
@@ -115,7 +115,7 @@ class PCConfigurationModel(models.Model):
         if options.disk:
             self.disk.file_system_type = options.disk.file_system_type if options.disk.file_system_type \
                 else self.disk.file_system_type
-            self.disk.total_memory = options.disk.memory if options.disk.memory else self.disk.total_memory
+            self.disk.total_memory = options.disk.total_memory if options.disk.total_memory else self.disk.total_memory
             self.disk.available = options.disk.available if options.disk.available else self.disk.available
             self.disk.used = options.disk.used if options.disk.used else self.disk.used
             self.disk.used_in_percents = options.disk.used_in_percents if options.disk.used_in_percents \
