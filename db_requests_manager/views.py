@@ -13,7 +13,8 @@ from db_requests_manager.request_options.delete import DeleteConfigOption
 from db_requests_manager.request_options.get import GetConfigOptions
 from db_requests_manager.request_options.post import PostConfigOptions
 from db_requests_manager.request_options.put import PutConfigOptions
-from pc_configuration.models import PCConfiguration, PCConfigurationSchema
+from pc_configuration.models.pc_configuration_model import PCConfigurationModel
+from pc_configuration.schemas.pc_configuration_schema import PCConfigurationSchema
 
 LOGGER = logging.getLogger(__name__)
 
@@ -37,22 +38,22 @@ class DBRequestsManagerView(View):
                 return self.__build_bad_request_response(exception)
 
             try:
-                pc_config = PCConfiguration.objects.get(token=request_body.token)
+                pc_config = PCConfigurationModel.objects.get(token=request_body.token)
                 pc_config_schema = PCConfigurationSchema().dump(pc_config)
                 return JsonResponse(
                     status=HTTPStatus.OK,
                     data=pc_config_schema
                 )
 
-            except PCConfiguration.DoesNotExist as exception:
+            except PCConfigurationModel.DoesNotExist as exception:
                 return self.__build_not_found_json_response(f'Configuration (token={request_body.token}) not found.',
                                                             exception)
 
         elif isinstance(request, GetConfigOptions):
             try:
-                return PCConfiguration.objects.get(token=request.token)
-            except PCConfiguration.DoesNotExist as exception:
-                raise PCConfiguration.DoesNotExist from exception
+                return PCConfigurationModel.objects.get(token=request.token)
+            except PCConfigurationModel.DoesNotExist as exception:
+                raise PCConfigurationModel.DoesNotExist from exception
 
     def post(self, request: HttpRequest) -> HttpResponse:
         try:
@@ -61,7 +62,7 @@ class DBRequestsManagerView(View):
             return self.__build_bad_request_response(exception)
 
         try:
-            new_config = PCConfiguration.create(request_body)
+            new_config = PCConfigurationModel.create(request_body)
         except IntegrityError as exception:
             return self.__build_config_already_exist_response(
                 f'Configuration (token={request_body.token}) already exist.',
@@ -81,8 +82,8 @@ class DBRequestsManagerView(View):
             return self.__build_bad_request_response(exception)
 
         try:
-            pc_config = PCConfiguration.objects.get(token=request_body.token)
-        except PCConfiguration.DoesNotExist as exception:
+            pc_config = PCConfigurationModel.objects.get(token=request_body.token)
+        except PCConfigurationModel.DoesNotExist as exception:
             return self.__build_not_found_json_response(f'Configuration (token={request_body.token}) not found.',
                                                         exception)
 
@@ -101,8 +102,8 @@ class DBRequestsManagerView(View):
             return self.__build_bad_request_response(exception)
 
         try:
-            pc_config = PCConfiguration.objects.get(token=request_body.token)
-        except PCConfiguration.DoesNotExist as exception:
+            pc_config = PCConfigurationModel.objects.get(token=request_body.token)
+        except PCConfigurationModel.DoesNotExist as exception:
             return self.__build_not_found_json_response(f'Configuration (token={request_body.token}) not found.',
                                                         exception)
         pc_config.delete()

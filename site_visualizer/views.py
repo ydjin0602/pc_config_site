@@ -8,7 +8,7 @@ from django.views.generic.base import View
 from marshmallow import ValidationError
 
 from db_requests_manager.views import DBRequestsManagerView, GetConfigOptions
-from pc_configuration.models import PCConfiguration
+from pc_configuration.models.pc_configuration_model import PCConfigurationModel
 
 LOGGER = logging.getLogger(__name__)
 
@@ -33,7 +33,7 @@ class PageVisualizerView(View):
             return render(request, 'pc_config.html', {'pc_config': pc_config})
 
         except (
-                PCConfiguration.DoesNotExist, json.JSONDecodeError, KeyError, UnicodeDecodeError,
+                PCConfigurationModel.DoesNotExist, json.JSONDecodeError, KeyError, UnicodeDecodeError,
                 ValidationError) as exception:
             # TODO: update error.html
             LOGGER.warning('Invalid token error', exc_info=exception)

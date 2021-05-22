@@ -15,8 +15,12 @@ class OSConfig:
 class ProcessorConfig:
     name: t.Optional[t.Text] = None
     architecture: t.Optional[t.Text] = None
+    total_cores: t.Optional[t.Text] = None
+    max_frequency: t.Optional[t.Text] = None
+    current_frequency: t.Optional[t.Text] = None
     temperature: t.Optional[t.Text] = None
     loading: t.Optional[t.Text] = None
+    usage_per_core: t.Optional[t.Text] = None
 
 
 @dataclass_json
@@ -30,8 +34,20 @@ class SocketInfoConfig:
 @dataclass_json
 @dataclass(frozen=True)
 class DiskConfig:
-    memory: t.Optional[t.Text] = None
-    loading: t.Optional[t.Text] = None
+    file_system_type: t.Optional[t.Text] = None
+    total_memory: t.Optional[t.Text] = None
+    available: t.Optional[t.Text] = None
+    used: t.Optional[t.Text] = None
+    used_in_percents: t.Optional[t.Text] = None
+
+
+@dataclass_json
+@dataclass
+class RAMConfig:
+    total_memory: t.Optional[t.Text] = None
+    available: t.Optional[t.Text] = None
+    used: t.Optional[t.Text] = None
+    used_in_percents: t.Optional[t.Text] = None
 
 
 @dataclass_json
@@ -42,4 +58,4 @@ class PutConfigOptions:
     processor: t.Optional[ProcessorConfig] = None
     socket_info: t.Optional[SocketInfoConfig] = None
     disk: t.Optional[DiskConfig] = None
-    ram: t.Optional[t.Text] = None
+    ram: t.Optional[RAMConfig] = None
