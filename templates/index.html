@@ -5,17 +5,20 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>pc_config</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>PCCS</title>
 </head>
 <body>
-<h1>PCCS - Personal Computer Configuration Service</h1>
-<a>1) Execute widget.exe<br> 2) Push connect button <br> 3) Copy and past token in field<br></a>
-<form method="post">
-    <p>
-
-        <input type="text" name="token" placeholder="token"><br>
-        <input type="submit" value="Send">
-    </p>
-</form>
+<div id="app">
+    <h1>Personal Computer Configuration Service</h1>
+    <a>1) Execute widget.exe.<br> 2) Push connect button.<br> 3) Copy and past token in field.<br></a>
+    <form method="post">
+        <p>
+            <input type="text" name="token" placeholder="Input your token"><br>
+            <input type="submit" value="Send">
+        </p>
+    </form>
+</div>
 </body>
 </html>

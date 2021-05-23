@@ -6,31 +6,59 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>PCCS</title>
 
-    <script type = "text/javascript">
-        function AutoRefresh( t ) {
-               setTimeout("location.reload(true);", t);
-            }
-    </script>
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/auto_refresh.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
 <body onload="AutoRefresh(10000);">
-
+<div id="app">
+    <h1>Your PC configuration</h1>
     {% block content %}
         {% if pc_config %}
             <p>
-            Your token: {{ pc_config.token }} <br>
-            OS name: {{ pc_config.os.name }} <br>
-            OS version: {{ pc_config.os.version }} <br>
-            Processor name: {{ pc_config.processor.name }} <br>
-            Processor architecture: {{ pc_config.processor.architecture }} <br>
-            Processor temperature: {{ pc_config.processor.temperature }} <br>
-            Processor loading: {{ pc_config.processor.loading }} <br>
-            Disk memory: {{ pc_config.disk.memory }} <br>
-            Disk loading: {{ pc_config.disk.loading }} <br>
-            RAM: {{ pc_config.ram }} <br>
-            Host: {{ pc_config.socket_info.host }} <br>
-            IP address: {{ pc_config.socket_info.ip_address }} <br>
-            MAC address: {{ pc_config.socket_info.mac_address }} <br>
+                Token: {{ pc_config.token }} <br>
+            </div>
+            <div id="app">
+                <h4>OS</h4>
+                Name: {{ pc_config.os.name }} <br>
+                Version: {{ pc_config.os.version }} <br>
+            </div>
+            <div id="app">
+                <h4>Processor</h4>
+                Name: {{ pc_config.processor.name }} <br>
+                Architecture: {{ pc_config.processor.architecture }} <br>
+                Total cores: {{ pc_config.processor.total_cores }} <br>
+                Max frequency: {{ pc_config.processor.max_frequency }} <br>
+                Current frequency: {{ pc_config.processor.current_frequency }} <br>
+                Temperature: {{ pc_config.processor.temperature }} <br>
+                Loading: {{ pc_config.processor.loading }} <br>
+                {% autoescape on %}
+                    Usage per core: <br> {{ pc_config.processor.usage_per_core | linebreaksbr }}
+                {% endautoescape %}
+
+            </div>
+            <div id="app">
+                <h4>Disk</h4>
+                File system type: {{ pc_config.disk.file_system_type }} <br>
+                Total memory: {{ pc_config.disk.total_memory }} <br>
+                Available memory: {{ pc_config.disk.available }} <br>
+                Used memory: {{ pc_config.disk.used }} <br>
+                Used memory in percents: {{ pc_config.disk.used_in_percents }} <br>
+            </div>
+            <div id="app">
+                <h4>RAM</h4>
+                Total memory: {{ pc_config.ram.total_memory }} <br>
+                Available memory: {{ pc_config.ram.available }} <br>
+                Used memory: {{ pc_config.ram.used }} <br>
+                Used memory in percents: {{ pc_config.ram.used_in_percents }} <br>
+            </div>
+            <div id="app">
+                <h4>Network information</h4>
+                Host: {{ pc_config.socket_info.host }} <br>
+                IP address: {{ pc_config.socket_info.ip_address }} <br>
+                MAC address: {{ pc_config.socket_info.mac_address }} <br>
+            </div>
             </p>
 
         {% else %}
