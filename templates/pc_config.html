@@ -55,6 +55,16 @@
                 Used memory in percents: {{ pc_config.ram.used_in_percents }} <br>
             </div>
             <div id="app">
+                <h4>GPU information</h4>
+                Name: {{ pc_config.gpu.name }} <br>
+                Temperature: {{ pc_config.gpu.temperature }} <br>
+                Loading: {{ pc_config.gpu.loading }} <br>
+                Total memory: {{ pc_config.gpu.total_memory }} <br>
+                Available memory: {{ pc_config.gpu.available }} <br>
+                Used memory: {{ pc_config.gpu.used }} <br>
+                Used memory in percents: {{ pc_config.gpu.used_in_percents }} <br>
+            </div>
+            <div id="app">
                 <h4>Network information</h4>
                 Host: {{ pc_config.socket_info.host }} <br>
                 IP address: {{ pc_config.socket_info.ip_address }} <br>

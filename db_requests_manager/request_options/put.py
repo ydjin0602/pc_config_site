@@ -51,6 +51,18 @@ class RAMConfig:
 
 
 @dataclass_json
+@dataclass
+class GPUConfig:
+    name: t.Optional[t.Text] = None
+    temperature: t.Optional[t.Text] = None
+    loading: t.Optional[t.Text] = None
+    total_memory: t.Optional[t.Text] = None
+    available: t.Optional[t.Text] = None
+    used: t.Optional[t.Text] = None
+    used_in_percents: t.Optional[t.Text] = None
+
+
+@dataclass_json
 @dataclass(frozen=True)
 class PutConfigOptions:
     token: t.Text
@@ -59,3 +71,4 @@ class PutConfigOptions:
     socket_info: t.Optional[SocketInfoConfig] = None
     disk: t.Optional[DiskConfig] = None
     ram: t.Optional[RAMConfig] = None
+    gpu: t.Optional[GPUConfig] = None

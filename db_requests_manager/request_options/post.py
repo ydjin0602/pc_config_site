@@ -51,6 +51,18 @@ class RAMConfig:
 
 
 @dataclass_json
+@dataclass
+class GPUConfig:
+    name: t.Text
+    temperature: t.Text
+    loading: t.Text
+    total_memory: t.Text
+    available: t.Text
+    used: t.Text
+    used_in_percents: t.Text
+
+
+@dataclass_json
 @dataclass(frozen=True)
 class PostConfigOptions:
     token: t.Text
@@ -59,3 +71,4 @@ class PostConfigOptions:
     socket_info: SocketInfoConfig
     disk: DiskConfig
     ram: RAMConfig
+    gpu: GPUConfig

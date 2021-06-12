@@ -2,6 +2,7 @@ from marshmallow import Schema, fields, EXCLUDE
 
 from pc_configuration.models.pc_configuration_model import PCConfigurationModel
 from pc_configuration.schemas.disk_configuration_shema import DiskConfigurationSchema
+from pc_configuration.schemas.gpu_configuration_schema import GPUConfigurationSchema
 from pc_configuration.schemas.os_configuration_schema import OSConfigurationSchema
 from pc_configuration.schemas.processor_configuration_schema import ProcessorConfigurationSchema
 from pc_configuration.schemas.ram_configuration_schema import RAMConfigurationSchema
@@ -19,3 +20,4 @@ class PCConfigurationSchema(Schema):
     socket_info = fields.Nested(SocketConfigurationSchema)
     disk = fields.Nested(DiskConfigurationSchema)
     ram = fields.Nested(RAMConfigurationSchema)
+    gpu = fields.Nested(GPUConfigurationSchema)

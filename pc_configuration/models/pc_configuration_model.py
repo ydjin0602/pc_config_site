@@ -2,6 +2,7 @@ from django.db import models
 
 from db_requests_manager.request_options.post import PostConfigOptions
 from db_requests_manager.request_options.put import PutConfigOptions
+from pc_configuration.models.gpu_configuration_model import GPUConfigurationModel
 from pc_configuration.models.os_configuration_model import OSConfigurationModel
 
 from pc_configuration.models.processor_configuration_model import ProcessorConfigurationModel
@@ -20,6 +21,7 @@ class PCConfigurationModel(models.Model):
     socket_info = models.ForeignKey(SocketConfigurationModel, on_delete=models.CASCADE)
     disk = models.ForeignKey(DiskConfigurationModel, on_delete=models.CASCADE)
     ram = models.ForeignKey(RAMConfigurationModel, on_delete=models.CASCADE)
+    gpu = models.ForeignKey(GPUConfigurationModel, on_delete=models.CASCADE)
 
     @classmethod
     def create(cls, options: PostConfigOptions) -> 'PCConfigurationModel':
@@ -59,11 +61,22 @@ class PCConfigurationModel(models.Model):
             used_in_percents=options.ram.used_in_percents,
         )
 
+        gpu_config = GPUConfigurationModel(
+            name=options.gpu.name,
+            temperature=options.gpu.temperature,
+            loading=options.gpu.loading,
+            total_memory=options.gpu.total_memory,
+            available=options.gpu.available,
+            used=options.gpu.used,
+            used_in_percents=options.gpu.used_in_percents,
+        )
+
         os_config.save()
         processor_config.save()
         socket_config.save()
         disk_config.save()
         ram_config.save()
+        gpu_config.save()
 
         new_config = cls.objects.create(
             token=options.token,
@@ -72,6 +85,7 @@ class PCConfigurationModel(models.Model):
             socket_info=socket_config,
             disk=disk_config,
             ram=ram_config,
+            gpu=gpu_config,
         )
 
         new_config.save()
@@ -130,5 +144,16 @@ class PCConfigurationModel(models.Model):
             self.ram.used_in_percents = options.ram.used_in_percents if options.ram.used_in_percents \
                 else self.ram.used_in_percents
             self.ram.save()
+
+        if options.gpu:
+            self.gpu.name = options.gpu.name if options.gpu.name else self.gpu.name
+            self.gpu.temperature = options.gpu.temperature if options.gpu.temperature else self.gpu.temperature
+            self.gpu.loading = options.gpu.loading if options.gpu.loading else self.gpu.loading
+            self.gpu.total_memory = options.gpu.total_memory if options.gpu.total_memory else self.gpu.total_memory
+            self.gpu.available = options.gpu.available if options.gpu.available else self.gpu.available
+            self.gpu.used = options.gpu.used if options.gpu.used else self.gpu.used
+            self.gpu.used_in_percents = options.gpu.used_in_percents if options.gpu.used_in_percents \
+                else self.gpu.used_in_percents
+            self.gpu.save()
         self.save()
         return self
